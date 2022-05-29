@@ -1,0 +1,101 @@
+[
+  {
+    "id": "S0",
+    "name": "뚱비다",
+    "ingredients": [
+      {"id": "S1", "requiredNumber": 1},
+      {"id": "S2", "requiredNumber": 1},
+      {"id": "E0", "requiredNumber": 10},
+      {"id": "E8", "requiredNumber": 1}
+    ],
+    "grade": "normal"
+  },
+  {
+    "id": "S1",
+    "name": "피범벅 코리브",
+    "drop": ["피범벅 코리브 드랍"],
+    "grade": "normal"
+  },
+  {
+    "id": "S2",
+    "name": "마쿠로일당 탕수이",
+    "ingredients": [
+      {"id": "E1", "requiredNumber": 10}
+    ]
+  },
+  {
+    "id": "S3",
+    "name": "대령 모건",
+    "ingredients": [
+      {"id": "S4", "requiredNumber": 1},
+      {"id": "S5", "requiredNumber": 1},
+      {"id": "E3", "requiredNumber": 10},
+      {"id": "E8", "requiredNumber": 10}
+    ],
+    "grade": "normal"
+  },
+  {
+    "id": "E2",
+    "name": "두목 마쿠로",
+    "ingredients": [
+      {"id": "8", "requiredNumber": 10}
+    ]
+  },
+  {
+    "id": "S5",
+    "name": "젖은머리 카리브",
+    "drop": ["젖은머리 카리브"]
+  },
+  {
+    "id": "S6",
+    "name": "중사 헤르메포",
+    "ingredients": [
+      {"id": "S7", "requiredNumber": 1},
+      {"id": "S3", "requiredNumber": 1},
+      {"id": "E4", "requiredNumber": 30},
+      {"id": "E8", "requiredNumber": 5}
+    ],
+    "grade": "normal"
+  },
+  {
+    "id": "S7",
+    "name": "잡일꾼 헤르메포",
+    "drop": ["모건"],
+    "grade": "normal"
+  },
+  
+  {
+    "id": "S8",
+    "name": "영혼 지휘자",
+    "ingredients": [
+      {"id": "S9", "requiredNumber": 1},
+      {"id": "S10", "requiredNumber": 1},
+      {"id": "E7", "requiredNumber": 1},
+      {"id": "E5", "requiredNumber": 60},
+      {"id": "E8", "requiredNumber": 40}
+    ],
+    "grade": "epic"
+  },
+  {
+    "id": "S9",
+    "name": "소울 킹 브룩",
+    "ingredients": [
+      {"id": "E5", "requiredNumber": 30}
+    ],
+    "grade": "rare"
+  },
+  {
+    "id": "S10",
+    "name": "스위트 페로나",
+    "ingredients": [
+      {"id": "E6", "requiredNumber": 20}
+    ]
+  },
+  {
+    "id": "S11",
+    "name": "돌팔이 로우",
+    "ingredients": [
+      {"id": "E7", "requiredNumber": 10}
+    ]
+  }
+]
