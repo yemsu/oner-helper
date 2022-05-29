@@ -1,0 +1,61 @@
+// search result
+.item-result {
+  &.epic {
+    button {
+      border: 1px solid $color-epic;
+    }
+  }
+  &.rare {
+    button {
+      border: 1px solid $color-rare;
+    }
+  }
+}
+
+.area-item-tree {
+  $box-width: 70px;
+  .wrap-depth {
+    display: flex;
+    &.depth-1 {
+      background-color: lavender;
+      .box-item {
+        width: $box-width * 2;
+        &:nth-child(n+2) {
+          border-left: 5px solid #fff;
+        }
+      }
+    }
+    &:not(.depth-1) {
+      background-color: lemonchiffon;
+      .box-item {
+        width: 50%;
+      }
+    }
+    .wrap-index {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      width: $box-width * 2;
+      border-bottom: 1px solid #eee;
+      &:nth-child(n+2) {
+        border-left: 5px solid #fff;
+      }
+    }
+    .box-item {
+      height: 100px;
+      padding: 10px;
+      text-align: center;
+      font-size: 12px;
+      img {
+        width: 46px;
+        height: 46px;
+      }
+      .item-name {
+        margin-top: 3px;
+        font-weight: bold;
+        word-break: keep-all;
+      }
+    }
+  }
+}
