@@ -1,0 +1,18 @@
+button {
+  padding: 5px 10px;
+  border: 1px solid var(--border-gray);
+  border-radius: 3px;
+  line-height: 1;
+}
+input {
+  padding: 5px 10px;
+  border: 1px solid var(--border-gray);
+  border-radius: 3px;
+  line-height: 1;
+}
+.wrap-input {
+  height: 30px;
+  input, button {
+    height: 100%;
+  }
+}
