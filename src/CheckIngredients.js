@@ -74,7 +74,7 @@ const Items = {
 
     const img = newElement('img')
     const itemType = item.type
-    img.src = `http://1.227.192.121:8000/static/image/${itemType}/${itemType[0]}${item.id}.png`
+    // img.src = `http://1.227.192.121:8000/static/image/${itemType}/${itemType[0]}${item.id}.png`
     img.alt = `${item.name}`
 
     const p = newElement('p', null, item.name)
@@ -106,30 +106,29 @@ const Items = {
     // this.ingredientsD2 = this.getIngredientsD2(this.ingredientsD1)
     // this.ingredientsD3 = this.getIngredientsD3(this.ingredientsD2)
     // console.log('this.ingredientsD1',  this.ingredientsD1)
-    console.log('this.ingredientsD2',  this.ingredientsD2)
+    // console.log('this.ingredientsD2',  this.ingredientsD2)
     // console.log('this.ingredientsD3',  this.ingredientsD3)
 
-    console.log(clickItem)
+    this.addIngredientDepth1(clickItem)
 
-    this.ingredientsByDepth.depth1 = this.ingredientsData(clickItem.ingredients).map(data => [data])
-    console.log('----------2')
-    if(this.hasAnyIngredients(this.ingredientsByDepth.depth1)) {
-      this.ingredientsByDepth.depth2 = this.addIngredientDepth(1)
-    }
-    console.log('----------3')
-    if(this.ingredientsByDepth.depth2 && this.hasAnyIngredients(this.ingredientsByDepth.depth2)) {
-      this.ingredientsByDepth.depth3 = this.addIngredientDepth(2)
-    }
-    console.log('----------4')
-    if(this.ingredientsByDepth.depth3 && this.hasAnyIngredients(this.ingredientsByDepth.depth3)) {
-      this.ingredientsByDepth.depth4 = this.addIngredientDepth(3)
-    }
-    console.log('----------5')
-    if(this.ingredientsByDepth.depth4 && this.hasAnyIngredients(this.ingredientsByDepth.depth4)) {
-      this.ingredientsByDepth.depth5 = this.addIngredientDepth(4)
-    }
-
-    console.log('setIngredients > this.ingredientsByDepth',  this.ingredientsByDepth)
+    // this.ingredientsByDepth.depth1 = this.ingredientsData(clickItem.ingredients)
+    // console.log('----------2')
+    // if(this.hasAnyIngredients(this.ingredientsByDepth.depth1)) {
+    //   this.ingredientsByDepth.depth2 = this.addIngredientDepth(1)
+    // }
+    // console.log('----------3')
+    // if(this.ingredientsByDepth.depth2 && this.hasAnyIngredients(this.ingredientsByDepth.depth2)) {
+    //   this.ingredientsByDepth.depth3 = this.addIngredientDepth(2)
+    // }
+    // console.log('----------4')
+    // if(this.ingredientsByDepth.depth3 && this.hasAnyIngredients(this.ingredientsByDepth.depth3)) {
+    //   this.ingredientsByDepth.depth4 = this.addIngredientDepth(3)
+    // }
+    // console.log('----------5')
+    // if(this.ingredientsByDepth.depth4 && this.hasAnyIngredients(this.ingredientsByDepth.depth4)) {
+    //   this.ingredientsByDepth.depth5 = this.addIngredientDepth(4)
+    // }
+    // console.log('setIngredients > this.ingredientsByDepth',  this.ingredientsByDepth)
   },
   hasAnyIngredients: function(itemsList) {
     // console.log('hasAnyIngredients: itemsList', itemsList)
@@ -145,19 +144,67 @@ const Items = {
       }
     }    
   },
-  addIngredientDepth: function(depthNum = 1) {
+  addIngredientDepth1: function(clickItem) {
+    if(!clickItem.ingredients) return false
+    clickItem.ingredients = this.ingredientsData(clickItem.ingredients)
+    for(const ingredients2 of clickItem.ingredients) {
+      if(ingredients2.ingredients) {
+        ingredients2.ingredients = this.ingredientsData(ingredients2.ingredients)
+        for(const ingredients3 of ingredients2.ingredients) {
+          if(ingredients3.ingredients) {
+            ingredients3.ingredients = this.ingredientsData(ingredients3.ingredients)
+            for(const ingredients4 of ingredients3.ingredients) {
+              if(ingredients4.ingredients) {
+                ingredients4.ingredients = this.ingredientsData(ingredients4.ingredients)
+              }
+            }
+          }
+        }
+      }
+    }
+    console.log('clickItem', clickItem)
+  },
+  addIngredientDepth: function(depthNum) {
     // console.log('addIngredientDepth: depthNum-----',depthNum)
-    const ingredientsList = this.ingredientsByDepth[`depth${depthNum}`].map(items => Array.isArray(items) ? items : [items])
+    const ingredients = this.ingredientsByDepth[`depth${depthNum}`]
     
     const nextIngredientsTotal = []
-    
-    for(let i = 0; i < ingredientsList.length; i++) {
+    // console.log(',ingredients,',ingredients)
+    for(let i = 0; i < ingredients.length; i++) {
       nextIngredientsTotal.push([])
-      const ingredientsList2 = ingredientsList[i]
-      for(const ingredients2 of ingredientsList2) {
-        const ingredientsStr = ingredients2?.ingredients
+      const ingredients1 = ingredients[i]
+      // console.log(',ingredients1,',ingredients1)
+
+      if(Array.isArray(ingredients1)) {
+        for(let j = 0; j < ingredients1.length; j++) {
+          const ingredients2 = ingredients1[j]
+
+          if(Array.isArray(ingredients2)) {
+            for(let j = 0; j < ingredients2.length; j++) {
+              const ingredientsStr = ingredients2?.ingredients
+
+            }
+          }
+          const ingredientsStr = ingredients2?.ingredients
+          if(ingredientsStr) {
+            const nextIngredients = this.ingredientsData(ingredientsStr)
+            nextIngredientsTotal[i].push([])
+            // console.log(i, nextIngredientsTotal, nextIngredients)
+            for(const nextIngredient of nextIngredients) {
+              // console.log('nextIngredients',  nextIngredient)
+              nextIngredientsTotal[i][j].push(nextIngredient)
+            }
+          } else {
+            nextIngredientsTotal[i].push(null)
+          }
+
+        }
+      } else {
+        const ingredientsStr = ingredients1?.ingredients
         if(ingredientsStr) {
           const nextIngredients = this.ingredientsData(ingredientsStr)
+          // nextIngredientsTotal[i].push([])
+          // console.log(i, nextIngredientsTotal, nextIngredients)
           for(const nextIngredient of nextIngredients) {
             // console.log('nextIngredients',  nextIngredient)
             nextIngredientsTotal[i].push(nextIngredient)
@@ -167,7 +214,9 @@ const Items = {
         }
       }
 
+
     }
+    console.log(nextIngredientsTotal)
 
     // console.log('nextIngredientsTotal', nextIngredientsTotal)
 
@@ -274,44 +323,48 @@ const Items = {
   ingredientsInfoHTML: function() {
     const ingredientsInfoHTML = newElement('div', 'area-item-tree')
 
-    for(const depth of Object.keys(this.ingredientsByDepth)) {
-      const depthNum = depth.split('depth')[1]
-      const ingredientsList = this.ingredientsByDepth[depth]
-      const wrapItemInfoHTML = newElement('div', `wrap-depth depth-${depthNum}`)
+    // for(const depth of Object.keys(this.ingredientsByDepth)) {
+    //   const depthNum = depth.split('depth')[1]
+    //   const ingredientsList = this.ingredientsByDepth[depth]
+    //   const wrapItemInfoHTML = newElement('div', `wrap-depth depth-${depthNum}`)
 
-      console.log('ingredientsInfoHTML: ingredientsList---', ingredientsList)
+    //   // console.log('ingredientsInfoHTML: ingredientsList---', ingredientsList)
+    //   for(let i = 0; i < ingredientsList.length; i++) {
+    //       const ingredients = ingredientsList[i]
+    //       const wrapIndexHTML = newElement('div', `wrap-index index-${i}`)
+    //     for(const ingredient of ingredients) {
+    //       if(!ingredient) continue
+    //       const itemInfo = this.itemBoxHTML(ingredient)
+    //       wrapIndexHTML.appendChild(itemInfo)
+    //     }
+    //     wrapItemInfoHTML.appendChild(wrapIndexHTML)
+    //   }
+
+    //   ingredientsInfoHTML.appendChild(wrapItemInfoHTML)
+    // }
+      const ingredientsList = this.ingredientsByDepth.depth1
+
+      // console.log('ingredientsInfoHTML: ingredientsList---', ingredientsList)
       for(let i = 0; i < ingredientsList.length; i++) {
-          const ingredients = ingredientsList[i]
           const wrapIndexHTML = newElement('div', `wrap-index index-${i}`)
-        for(const ingredient of ingredients) {
-          if(!ingredient) continue
-          const itemInfo = this.itemBoxHTML(ingredient)
-          wrapIndexHTML.appendChild(itemInfo)
+        for(const depth of Object.keys(this.ingredientsByDepth)) {
+          const depthNum = depth.split('depth')[1]
+          const ingredients = this.ingredientsByDepth[depth][i]
+          const wrapItemInfoHTML = newElement('div', `wrap-depth depth-${depthNum}`)
+          for(const ingredient of ingredients) {
+            if(!ingredient) {
+              const div = newElement('div', 'box-item')
+              wrapItemInfoHTML.appendChild(div)
+              continue
+            }
+            const itemInfo = this.itemBoxHTML(ingredient)
+            wrapItemInfoHTML.appendChild(itemInfo)
+          }          
+          wrapIndexHTML.appendChild(wrapItemInfoHTML)
         }
-        wrapItemInfoHTML.appendChild(wrapIndexHTML)
+        ingredientsInfoHTML.appendChild(wrapIndexHTML)
       }
 
-      ingredientsInfoHTML.appendChild(wrapItemInfoHTML)
-    }
-
-    // const wrapItemInfoD1HTML = newElement('div', 'wrap-depth depth-1')
-    // const wrapItemInfoD2HTML = newElement('div', 'wrap-depth depth-2')
-
-    // for(let i = 0; i < this.ingredientsD1.length; i++) {
-    //   const wrapIndexHTML = newElement('div', `wrap-index index-${i}`)
-    //   const itemInfoD1 = this.itemBoxHTML(this.ingredientsD1[i], `index-${i}`)
-    //   wrapItemInfoD1HTML.appendChild(itemInfoD1)
-    //   if(this.ingredientsD2[i]) {
-    //     for(const ingredientD2 of this.ingredientsD2[i]) {
-    //       const itemInfoD2 = this.itemBoxHTML(ingredientD2)
-    //       wrapIndexHTML.appendChild(itemInfoD2)
-    //     }
-    //   }
-    //   wrapItemInfoD2HTML.appendChild(wrapIndexHTML)
-    // }
-
-    // ingredientsInfoHTML.appendChild(wrapItemInfoD1HTML)
-    // ingredientsInfoHTML.appendChild(wrapItemInfoD2HTML)
     return ingredientsInfoHTML
   },
   itemBoxHTML: function(item, className) {
@@ -320,7 +373,7 @@ const Items = {
     const itemType = item.type
     if(itemType) {
       const img = newElement('img')
-      img.src = `http://1.227.192.121:8000/static/image/${itemType}/${itemType[0]}${item.id}.png`
+      // img.src = `http://1.227.192.121:8000/static/image/${itemType}/${itemType[0]}${item.id}.png`
       img.alt = ``
       itemBoxHTML.appendChild(img)
     }
